@@ -1,2 +1,3 @@
 auth-env-secret.yaml
 auth-private-key-secret.yaml
+catalog-secret.yaml
