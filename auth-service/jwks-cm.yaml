@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-jwks
+data:
+  jwks.json: |
+      {
+        "keys": [
+          {
+              "kty": "RSA",
+              "use": "sig",
+              "n": "AI_q0Dv6aCTbJfpJASRAuTnL_PqgrV1-LM3g5cmi9aXE8j0TjGn_WFaBWTZb14sn-K00JP9OKF3-_hJPSyBha6vPw8Brc7wrymQva3BI4qe8RyinLjUPQIpnkgQEYIrE56L0KJB-zBWVGqzp3Fr1MrN9wop_f4fvR7OIUt_peA-6wVE-8e1Pu7MAb62McA29Sw6z3dgH-kEdd-r4Sh8oIpdW8nVuVjdnmm3vQNZkR4qoMDQqynOSLRWlsNffmVqHBA2MGzjXiJri-m1EECjknndqpeZQjxdOZAgMz8eD-rLwTKhjn9qzFr8N_OE5zXJB-5npJatJ5cAZr1Uiwab5IDU",
+              "e": "AQAB"
+          }
+        ]
+      }

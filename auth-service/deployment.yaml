@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  labels:
+    app: auth-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-container
+          image: codersgyan/mernspace-c-auth-service:build-26
+          ports:
+            - containerPort: 5501
+          volumeMounts:
+            - name: auth-jwks
+              mountPath: "/home/node/app/public/.well-known"
+              readOnly: true
+            - name: private-key
+              mountPath: "/home/node/app/certs"
+              readOnly: true
+            - name: environment
+              mountPath: "/home/node/app/.env.production"
+              subPath: ".env.production"
+      volumes:
+        - name: auth-jwks
+          configMap:
+            name: auth-jwks
+        - name: private-key
+          secret:
+            secretName: auth-private-key
+        - name: environment
+          secret:
+            secretName: auth-env-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: 'auth-service'
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - protocol: TCP
+      port: 5501
+      targetPort: 5501
+
+
