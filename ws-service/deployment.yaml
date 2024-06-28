@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ws-service
+  labels:
+    app: ws-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ws-service
+  template:
+    metadata:
+      labels:
+        app: ws-service
+    spec:
+      containers:
+        - name: ws-container
+          image: codersgyan/mernspace-c-ws-service:build-9
+          ports:
+            - containerPort: 5504
+          volumeMounts:
+            - name: ws-secret
+              mountPath: "/home/node/app/config"
+              readOnly: true
+      volumes:
+        - name: ws-secret
+          secret:
+            secretName: ws-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ws-service
+spec:
+  selector:
+    app: ws-service
+  ports:
+    - protocol: TCP
+      port: 5504
+      targetPort: 5504
+
+
