@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+  labels:
+    app: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-container
+          image: codersgyan/mernspace-c-notification-service:build-1
+          ports:
+            - containerPort: 5505
+          volumeMounts:
+            - name: notification-secret
+              mountPath: "/home/node/app/config"
+              readOnly: true
+      volumes:
+        - name: notification-secret
+          secret:
+            secretName: notification-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+spec:
+  selector:
+    app: notification-service
+  ports:
+    - protocol: TCP
+      port: 5505
+      targetPort: 5505
+
+
