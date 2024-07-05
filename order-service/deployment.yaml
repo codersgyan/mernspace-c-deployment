@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: order-container
-          image: codersgyan/mernspace-c-order-service:build-6
+          image: codersgyan/mernspace-c-order-service:build-7
           ports:
             - containerPort: 5503
           volumeMounts:
